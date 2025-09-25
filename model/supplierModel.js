@@ -19,8 +19,13 @@ class Supplier{
     }
 
     static update(id, supplierData, result){
-        const sql = 'UPDATE users SET name = ?, contact=? WHERE id = ?';
+        const sql = 'UPDATE suppliers SET name = ?, contact=? WHERE id = ?';
         db.query(sql, [supplierData.name, supplierData.contact, id], result);
+    }
+
+    static delete(id, result){
+        const sql = 'DELETE FROM suppliers WHERE id = ?';
+        db.query(sql, [id], result);
     }
 }
 

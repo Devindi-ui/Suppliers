@@ -43,7 +43,30 @@ const SupplierController = {
         );
     },
 
-    updateSupplier
+    updateSupplier: (req, res) => {
+        const {id} = req.params;
+        const {name, contact} = req.body;
+
+        Supplier.update(id, {name, contact}, (err, result) => {
+            if(err){
+                return res.status(500).json({message: "Database error", error: err});
+            }
+            res.status(200).json({message: "User updated successfully", data: result});
+        });
+    },
+
+    deleteSupplier:(req, res) => {
+        const [id] = req.params;
+        Supplier.delete (id, (err, result) => {
+            if(err){
+                return res.status(500).json({message: "Database error", error: err});
+            }
+            if(result.affectedRows === 0){
+                return res.status(404).json({message: "Supplier not found"});
+            }
+            res.status(200).json({message: "User deleted successfully", data: result});
+        });
+    }
 }
 
 module.exports = SupplierController;
